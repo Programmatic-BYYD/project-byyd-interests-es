@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerente de Intereses del IAB</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div id="toast-container"></div>
+
+    <div class="header">
+      <div class="header-content">
+        <div class="header-title">
+          Categorías e intereses de la solicitud del IAB (BYYD)
+        </div>
+        <div class="lang-switcher">
+          <a
+            href="https://programmatic-byyd.github.io/project-byyd-interests-en/"
+            class="lang-btn"
+            >EN</a
+          >
+          <a
+            href="https://programmatic-byyd.github.io/project-byyd-interests-ru/"
+            class="lang-btn"
+            >RU</a
+          >
+          <a
+            href="https://programmatic-byyd.github.io/project-byyd-interests-ru/"
+            class="lang-btn active"
+            >ES</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Intereses</h3>
+          <div class="actions-row">
+            <button onclick="toggleAllDetails(true)">Expandir todo</button>
+            <button onclick="toggleAllDetails(false)">Contraer todo</button>
+          </div>
+        </div>
+
+        <div class="search-wrapper">
+          <input
+            id="search"
+            placeholder="Search by interests"
+            autocomplete="off"
+          />
+          <button id="clear-search">✕</button>
+        </div>
+
+        <div class="main-controls">
+          <button onclick="selectAll()">Seleccionar todo</button>
+          <button onclick="clearInterests()">Quitar todo</button>
+          <button
+            onclick="downloadFullExcel()"
+            style="border-color: #107c10; color: #107c10"
+          >
+            📥 Descargar lista de intereses de Excel
+          </button>
+        </div>
+
+        <div id="categories" class="scroll-area"></div>
+      </div>
+
+      <div class="panel right-panel">
+        <h3>Seleccionado: <span id="count">0</span></h3>
+        <div id="selected" class="selected-list scroll-area"></div>
+
+        <div class="footer-actions">
+          <button class="btn-copy" onclick="copyInterests()">
+            Copiar lista
+          </button>
+          <button onclick="clearInterests()">Claro</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
