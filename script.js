@@ -58,6 +58,14 @@ function highlight(text, query) {
 function renderCategories() {
     const categoriesDiv = document.getElementById('categories');
     if (!categoriesDiv) return;
+
+    // 1. Сохраняем состояние развернутых категорий перед очисткой
+    const openStates = {};
+    categoriesDiv.querySelectorAll('details').forEach(d => {
+        const catName = d.querySelector('summary span').innerText;
+        openStates[catName] = d.open;
+    });
+
     categoriesDiv.innerHTML = '';
     
     const query = document.getElementById('search').value.toLowerCase();
@@ -72,11 +80,19 @@ function renderCategories() {
         if (visibleInterests.length === 0 && !isCatMatch) continue;
 
         const details = document.createElement('details');
-        details.open = true;
+        
+        // 2. Восстанавливаем состояние: если был открыт или идет активный поиск — открываем
+        // Если это первый рендер (openStates пуст), ставим true по умолчанию
+        const wasOpen = openStates[category];
+        details.open = (query.length > 0) || (wasOpen !== undefined ? wasOpen : true);
 
         const summary = document.createElement('summary');
+        
+        // Предотвращаем схлопывание details при клике на сам чекбокс
         const catCheck = document.createElement('input');
         catCheck.type = 'checkbox';
+        catCheck.onclick = (e) => e.stopPropagation(); 
+        
         catCheck.checked = globalData[category].every(i => selected.has(i)) && globalData[category].length > 0;
         catCheck.indeterminate = globalData[category].some(i => selected.has(i)) && !catCheck.checked;
 
